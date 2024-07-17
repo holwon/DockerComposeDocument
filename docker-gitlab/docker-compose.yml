@@ -1,0 +1,50 @@
+services:
+  gitlab:
+    image: "gitlab/gitlab-ce:latest" # 使用GitLab社区版最新镜像
+    container_name: "gitlab"
+    restart: always
+    hostname: "docker_gitlab"
+    networks:
+      - gitlab_networks
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://47.106.99.224'
+    # ports:
+      # - "10002:80" # 把宿主机的80端口映射到容器的80端口
+      # - "8443:443" # 把宿主机的8443端口映射到容器的443端口
+      # - "2222:22" # 把宿主机的2222端口映射到容器的22端口
+    volumes:
+      - "gitlab-config:/etc/gitlab" # 使用docker的虚拟磁盘存储配置
+      - "gitlab-logs:/var/log/gitlab" # 使用docker的虚拟磁盘存储日志
+      - "gitlab-data:/var/opt/gitlab" # 使用docker的虚拟磁盘存储数据
+  frpc:
+    image: snowdreamtech/frpc
+    restart: always
+    networks:
+      - gitlab_networks
+    # network_mode: host
+    depends_on:
+      - gitlab
+    volumes:
+      - ./frpc.toml:/etc/frp/frpc.toml
+  nginx:
+    image: nginx:latest
+    container_name: "nginx"
+    restart: always
+    networks:
+      - gitlab_networks
+    volumes:
+      - ./conf.d:/etc/nginx/conf.d
+      - nginx_html:/usr/share/nginx/html
+      - nginx_logs:/var/log/nginx
+    depends_on:
+      - gitlab
+volumes:
+  gitlab-config:
+  gitlab-logs:
+  gitlab-data:
+  nginx_html:
+  nginx_logs:
+
+networks:
+  gitlab_networks:

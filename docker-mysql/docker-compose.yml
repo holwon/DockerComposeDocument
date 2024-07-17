@@ -1,0 +1,18 @@
+version: "3"
+services:
+  mysql:
+    image: docker.io/mysql:8.0.36-debian
+    container_name: mysql_8.0.36_debian
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+      - "33306:3306"
+    volumes:
+      - mysql_data_8.0.36:/var/lib/mysql
+      - mysql_log_8.0.36:/var/log/mysql
+
+volumes:
+  mysql_data_8.0.36:
+  mysql_log_8.0.36:

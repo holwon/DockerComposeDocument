@@ -1,0 +1,14 @@
+services:
+  dns-server:
+    image: technitium/dns-server
+    container_name: dns-server
+    ports:
+      - "5380:5380" # Web 管理界面的端口
+      - "53:53" # DNS 查询的端口 (TCP)
+      - "53:53/udp" # DNS 查询的端口 (UDP)
+    volumes:
+      - dns-config:/etc/dns/config # 使用 Docker 卷
+    restart: unless-stopped
+
+volumes:
+  dns-config:

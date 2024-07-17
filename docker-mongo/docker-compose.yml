@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo
+    container_name: dockerMongodb
+    command: "--auth"
+    volumes:
+      - E:\DockerDB\NoSqlDB\mongodb\conf\mongod.conf:/etc/mongo/mongodb.conf
+      - E:\DockerDB\NoSqlDB\mongodb\data\db:/data/db
+    ports:
+      - 27017:27017
+    restart: always

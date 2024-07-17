@@ -1,0 +1,1 @@
+docker run -it --name code-server -p 127.0.0.1:8887:8080 -v "D:\Users\a2230\Documents\Docker\vscode-docker\.config:/home/coder/.config" -v "D:\Users\a2230\Documents\Docker\vscode-docker\project:/home/coder/project" -u "1000:1000" -e "DOCKER_USER=user" codercom/code-server:latest

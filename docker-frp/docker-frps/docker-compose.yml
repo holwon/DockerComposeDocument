@@ -1,0 +1,11 @@
+services:
+  frps:
+    image: snowdreamtech/frps
+    container_name: frps
+    restart: always
+    # ports:
+    #   - 7000:7000
+    #   - 7500:7500
+    network_mode: host
+    volumes:
+      - D:\Users\a2230\Documents\Docker\docker-frp\docker-frps\frps.toml:/etc/frp/frps.toml

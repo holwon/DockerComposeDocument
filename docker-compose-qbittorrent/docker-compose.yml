@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  qbittorrent:
+    image: kasmweb/qbittorrent:1.14.0-rolling
+    container_name: qbittorrent
+    ports:
+      - "6901:6901" # 将容器的 6901 端口映射到主机的 6901 端口
+    environment:
+      - VNC_PW=password # 设置 VNC 密码
+    volumes:
+      - qbittorrent_data:/data # 将名为 qbittorrent_data 的虚拟卷挂载到容器的 /data 目录
+
+volumes:
+  qbittorrent_data:
+    driver: local
+# 访问 qBittorrent 界面：
+# 在浏览器中访问 https://<你的主机IP>:6901，你应该可以看到 qBittorrent 的 Web UI 界面。登录使用的用户名是 kasm_user，密码是你在环境变量中设置的 password。
