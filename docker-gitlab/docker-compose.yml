@@ -17,6 +17,7 @@ services:
       - "gitlab-config:/etc/gitlab" # 使用docker的虚拟磁盘存储配置
       - "gitlab-logs:/var/log/gitlab" # 使用docker的虚拟磁盘存储日志
       - "gitlab-data:/var/opt/gitlab" # 使用docker的虚拟磁盘存储数据
+      
   frpc:
     image: snowdreamtech/frpc
     restart: always
