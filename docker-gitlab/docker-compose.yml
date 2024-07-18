@@ -9,6 +9,8 @@ services:
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'http://47.106.99.224'
+        gitlab_rails['gitlab_shell_ssh_port'] = 10022
+        nginx['client_max_body_size'] = '250m'  # 增加最大请求大小
     # ports:
       # - "10002:80" # 把宿主机的80端口映射到容器的80端口
       # - "8443:443" # 把宿主机的8443端口映射到容器的443端口
@@ -23,11 +25,11 @@ services:
     restart: always
     networks:
       - gitlab_networks
-    # network_mode: host
     depends_on:
       - gitlab
     volumes:
       - ./frpc.toml:/etc/frp/frpc.toml
+
   nginx:
     image: nginx:latest
     container_name: "nginx"
