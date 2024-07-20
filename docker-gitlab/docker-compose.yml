@@ -1,7 +1,6 @@
 services:
   gitlab:
     image: "gitlab/gitlab-ce:latest" # 使用GitLab社区版最新镜像
-    container_name: "gitlab"
     restart: always
     hostname: "docker_gitlab"
     networks:
@@ -20,6 +19,15 @@ services:
       - "gitlab-logs:/var/log/gitlab" # 使用docker的虚拟磁盘存储日志
       - "gitlab-data:/var/opt/gitlab" # 使用docker的虚拟磁盘存储数据
       
+  
+  gitlab-runner:
+    image: gitlab/gitlab-runner:latest
+    restart: always
+    networks:
+      - gitlab_networks
+    volumes:
+      - gitlab-runner-config:/etc/gitlab-runner
+
   frpc:
     image: snowdreamtech/frpc
     restart: always
@@ -32,7 +40,6 @@ services:
 
   nginx:
     image: nginx:latest
-    container_name: "nginx"
     restart: always
     networks:
       - gitlab_networks
@@ -46,6 +53,7 @@ volumes:
   gitlab-config:
   gitlab-logs:
   gitlab-data:
+  gitlab-runner-config:
   nginx_html:
   nginx_logs:
 

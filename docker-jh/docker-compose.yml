@@ -1,0 +1,32 @@
+services:
+  dst-admin-go:
+    image: hujinbo23/dst-admin-go:1.2.7
+    restart: unless-stopped
+    volumes:
+      - ./data/DoNotStarveTogether:/root/.klei/DoNotStarveTogether
+      - ./data/app/backup:/app/backup
+      - ./data/app/mod:/app/mod
+      - ./data/app/dst-db:/app/dst-db
+      - ./data/app/dst-admin-go.log:/app/dst-admin-go.log
+      - ./data/app/dst-dedicated-server:/app/dst-dedicated-server
+      - ./data/app/steamcmd:/app/steamcmd
+    ports:
+      # - "8082:8082"
+      - "10998-11018:10998-11018/udp"
+    expose:
+      - "8082"
+    deploy:
+      resources:
+        limits:
+          memory: 1.8G
+        reservations:
+          memory: 1.8G
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-proxy
+    ports:
+      - "9638:9638"
+    volumes:
+      - ./nginx-docker/nginx/conf.d:/etc/nginx/conf.d
+    

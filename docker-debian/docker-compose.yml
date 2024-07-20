@@ -1,0 +1,5 @@
+services:
+  myapp:
+    image: bitnami/debian-base-buildpack
+    restart: always
+    command: tail -f /dev/null
